@@ -3,7 +3,7 @@ import moment from 'moment';
 import '../components/chat.css'
 
 const io = require('socket.io-client');
-const socket = io.connect('http://localhost:3007');
+const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
 
   socket.on('connect', function () {
     console.log('connected to server');
