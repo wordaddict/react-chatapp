@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import '../components/chat.css'
+import styled from 'styled-components'
+import '../components/chat.css';
+
+const Scrollable = styled.div`
+  height: 100%;
+  overflow: auto;
+`
 
 const io = require('socket.io-client');
 const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
+//const socket = io.connect('localhost:3007');
 
   socket.on('connect', function () {
     console.log('connected to server');
-    // const urlParams = new URLSearchParams(window.location.search);
-    // console.log('Url', urlParams);
-    // const name = urlParams.get('name');
-    // console.log('name', name);
-    // const room = urlParams.get('room');
-    // console.log('room', room);
-    // const params = {
-    //   name,
-    //   room
-    // }
-    //socket.emit('join', params);
-   });
+  });
   
    socket.on('newMess', (data) => {
     console.log('for the group', data);
@@ -31,19 +27,23 @@ const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
 export default class Chat extends Component {
   constructor(props) {
     super(props);
+    this.chatsRef = React.createRef();
     this.state = {
       admin: {},
       message: '',
       messages: {},
       newMessage: {},
-      messageArray: []
+      messageArray: [],
+      userList: []
     }
     this.createMessage = this.createMessage.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
+    this.scrollToBottom();
     const urlParams = new URLSearchParams(window.location.search);
     console.log('Url', urlParams);
     const name = urlParams.get('name');
@@ -75,7 +75,22 @@ export default class Chat extends Component {
       this.setState({ messageArray: this.state.messageArray.concat(data) })
       console.log('new message', data);
       console.log('messageArray', this.state.messageArray)
+    });
+
+    socket.on('updateUserList', (data) => {
+      console.log('users list', data);
+      this.setState({
+        userList: data
+      });
     })
+  }
+
+  componentDidUpdate(){
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(){
+    this.panel.scrollTo(0, this.panel.scrollHeight)
   }
   
   createMessage() {
@@ -118,15 +133,22 @@ export default class Chat extends Component {
 
   render() {
     const message = this.state.message;
+    const userList = this.state.userList;
     console.log('message', message);
     return (
       <div className="chat">
           <div className="chat__sidebar">
             <h3>People</h3>
-            <div id="users"></div>
+            <div id="users">
+              {userList.map((element) => {
+                return <ul>
+                  <li>{element}</li>
+                </ul>
+              })}
+            </div>
           </div>
           <div className="chat__main">
-            <ol id="messages" class="chat__messages"></ol>
+            <Scrollable innerRef={(panel) => { this.panel = panel; }}>
              <div id="message-template" type="text/template">
                 <ol className="chat__messages">
                 <li class="message">
@@ -155,13 +177,14 @@ export default class Chat extends Component {
                 ]
               )}
             </div>
+            </Scrollable>
           <div className="chat__footer">
             <form id="message-form">
               <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={this.state.message} onChange={this.handleMessageChange}/>
               <button type="button" onClick={this.handleClick}>Send</button>
             </form>
           </div>
-          </div>
+        </div>
       </div>
     )
   }
