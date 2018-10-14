@@ -7,26 +7,17 @@ const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
 
   socket.on('connect', function () {
     console.log('connected to server');
-    const urlParams = new URLSearchParams(window.location.search);
-    console.log('Url', urlParams);
-    const name = urlParams.get('name');
-    console.log('name', name);
-    const room = urlParams.get('room');
-    console.log('room', room);
-    const params = {
-      name,
-      room
-    }
-    socket.emit('join', params
-    //  function (err) {
-    //   if (err) {
-    //     alert(err);
-    //     window.location.href = '/';
-    //   } else {
-    //     console.log('No error');
-    //   }
+    // const urlParams = new URLSearchParams(window.location.search);
+    // console.log('Url', urlParams);
+    // const name = urlParams.get('name');
+    // console.log('name', name);
+    // const room = urlParams.get('room');
+    // console.log('room', room);
+    // const params = {
+    //   name,
+    //   room
     // }
-  );
+    //socket.emit('join', params);
    });
   
    socket.on('newMess', (data) => {
@@ -53,6 +44,17 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log('Url', urlParams);
+    const name = urlParams.get('name');
+    console.log('name', name);
+    const room = urlParams.get('room');
+    console.log('room', room);
+    const params = {
+      name,
+      room
+    }
+    socket.emit('join', params);
     socket.on('adminMessage', (data) => {
        console.log('greetings from admin', data);
        const formattedTime = moment(data.createdAt).format('h:mm a');
