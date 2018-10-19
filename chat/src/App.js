@@ -59,6 +59,8 @@ export default class App extends Component {
         fullName: fullName
       });
     }
+    const room = this.state.room;
+    const fullName = this.state.fullName;
     return (
       <div className="centered-form">
         <div className="centered-form__form">
@@ -67,7 +69,7 @@ export default class App extends Component {
               <h3>Join a Chat</h3>
             </div>
               <div className="form-field">
-                <label>Room name</label>
+                <label>Create a room</label>
                 <input type="text" name="room" placeholder="Room" value={this.state.room} onChange={this.handleRoomChange}/>
               </div>
               <GoogleLogin
@@ -75,6 +77,7 @@ export default class App extends Component {
                 buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
+                redirectUri={`https://afternoon-sands-58050.herokuapp.com/?name=${fullName}&room=${room}`}
               />
             {/* <div className="form-field">
               <label>Display name</label>
