@@ -58,9 +58,6 @@ export default class App extends Component {
         fullName: fullName
       });
     }
-    const room = this.state.room;
-    const fullName = this.state.fullName;
-    const redirectUri = `https://afternoon-sands-58050.herokuapp.com/chat?name=${fullName}&room=${room}`
     return (
       <div className="centered-form">
         <div className="centered-form__form">
@@ -77,8 +74,6 @@ export default class App extends Component {
                 buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                uxMode='redirect'
-                redirectUri={redirectUri}
               />
             {/* <div className="form-field">
               <label>Display name</label>
