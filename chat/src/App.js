@@ -66,18 +66,9 @@ export default class App extends Component {
             <div className="form-field">
               <h3>Join a Chat</h3>
             </div>
-              {/* <div className="form-field">
+              <div className="form-field">
                 <label>Room name</label>
                 <input type="text" name="room" placeholder="Room" value={this.state.room} onChange={this.handleRoomChange}/>
-              </div> */}
-              <div class="dropdown">
-                <button class="dropbtn">Dropdown</button>
-                <div class="dropdown-content">
-                  <a href="#" onClick={this.handleRoomChange}>Social</a>
-                  <a href="#" onClick={this.handleRoomChange}>Entertainment</a>
-                  <a href="#" onClick={this.handleRoomChange}>Tech</a>
-                  <a href="#" onClick={this.handleRoomChange}>Lifestyle</a>
-                </div>
               </div>
               <GoogleLogin
                 clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
