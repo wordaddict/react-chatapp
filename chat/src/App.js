@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GoogleLogin from 'react-google-login';
 import './App.css';
 import './components/chat.css'
 
@@ -45,8 +46,17 @@ export default class App extends Component {
   };
 
   render() {
+    const responseGoogle = (response) => {
+      console.log(response);
+    }
     return (
       <div className="centered-form">
+        <GoogleLogin
+          clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+        />
         <div className="centered-form__form">
           <form action="/chat.html">
             <div className="form-field">

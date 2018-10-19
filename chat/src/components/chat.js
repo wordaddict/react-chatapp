@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import '../components/chat.css';
 
 const Scrollable = styled.div`
@@ -10,14 +10,10 @@ const Scrollable = styled.div`
 
 const io = require('socket.io-client');
 const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
-//const socket = io.connect('localhost:3007');
+// const socket = io.connect('localhost:3007');
 
   socket.on('connect', function () {
     console.log('connected to server');
-  });
-  
-   socket.on('newMess', (data) => {
-    console.log('for the group', data);
   });
   
   socket.on('disconnect', () => {
