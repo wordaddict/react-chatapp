@@ -60,8 +60,7 @@ export default class App extends Component {
     }
     const room = this.state.room;
     const fullName = this.state.fullName;
-    const redirectUri = 'www.google.com'
-    //const redirectUri = `https://afternoon-sands-58050.herokuapp.com/?name=${fullName}&room=${room}`
+    const redirectUri = `https://afternoon-sands-58050.herokuapp.com/chat?name=${fullName}&room=${room}`
     return (
       <div className="centered-form">
         <div className="centered-form__form">
@@ -78,7 +77,7 @@ export default class App extends Component {
                 buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                ux_mode='redirect'
+                uxMode='redirect'
                 redirectUri={redirectUri}
               />
             {/* <div className="form-field">
