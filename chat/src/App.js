@@ -25,7 +25,6 @@ export default class App extends Component {
   }
 
   handleRoomChange(e) {
-    console.log('roommm', e);
     e.preventDefault();
     this.setState({
       room: e.target.value
@@ -61,6 +60,7 @@ export default class App extends Component {
     }
     const room = this.state.room;
     const fullName = this.state.fullName;
+    const redirectUri = 'www.google.com'
     const redirectUri = `https://afternoon-sands-58050.herokuapp.com/?name=${fullName}&room=${room}`
     return (
       <div className="centered-form">
