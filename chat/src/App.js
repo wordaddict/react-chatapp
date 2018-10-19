@@ -49,6 +49,9 @@ export default class App extends Component {
 
   render() {
     const responseGoogle = (response) => {
+      if (!response) {
+        return;
+      }
       const fullName = response.profileObj.name;
       console.log(response.profileObj.name);
       this.setState({
@@ -68,18 +71,17 @@ export default class App extends Component {
               </div>
               <GoogleLogin
                 clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
-                buttonText="Login"
+                buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                onClick={this.handleClick}
               />
             {/* <div className="form-field">
               <label>Display name</label>
               <input type="text" name="name" autoFocus placeholder="Name" value={this.state.name} onChange={this.handleNameChange}/>
             </div> */}
-            {/* <div className="form-field">
+            <div className="form-field">
               <button type="button" onClick={this.handleClick}>Join</button>
-            </div> */}
+            </div>
           </form>
         </div>
       </div>
