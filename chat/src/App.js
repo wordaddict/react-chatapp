@@ -8,7 +8,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       name: '',
-      room: ''
+      room: '',
+      fullName: ''
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -39,33 +40,38 @@ export default class App extends Component {
     });
     const room = this.state.room;
     const name = this.state.name;
+    const fullName = this.state.fullName;
     this.props.history.push({
       pathname: `/chat`,
-      search: `?name=${name}&room=${room}`
+      search: `?name=${fullName}&room=${room}`
     });
   };
 
   render() {
     const responseGoogle = (response) => {
-      console.log(response);
+      const fullName = response.profileObj.name;
+      console.log(response.profileObj.name);
+      this.setState({
+        fullName: fullName
+      });
     }
     return (
       <div className="centered-form">
-        <GoogleLogin
-          clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-        />
         <div className="centered-form__form">
           <form action="/chat.html">
             <div className="form-field">
               <h3>Join a Chat</h3>
             </div>
-            <div className="form-field">
+              <GoogleLogin
+                clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+              />
+            {/* <div className="form-field">
               <label>Display name</label>
               <input type="text" name="name" autoFocus placeholder="Name" value={this.state.name} onChange={this.handleNameChange}/>
-            </div>
+            </div> */}
             <div className="form-field">
               <label>Room name</label>
               <input type="text" name="room" placeholder="Room" value={this.state.room} onChange={this.handleRoomChange}/>
