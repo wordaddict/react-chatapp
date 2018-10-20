@@ -105,6 +105,19 @@ export default class Chat extends Component {
 
   handleClick(e) {
     e.preventDefault();
+    if (e.keyCode === 13) {
+      this.createMessage();
+      const reduxState = store.getState();
+      const { message } = reduxState;
+      socket.emit('createMessage', {
+        message
+      }, function(data) {
+        console.log('daaata', data);
+      })
+
+      const data = '';
+      store.dispatch(userMessage(data));
+    }
     this.createMessage();
     const reduxState = store.getState();
     const { message } = reduxState;
@@ -120,7 +133,7 @@ export default class Chat extends Component {
 
   render() {
     const reduxState = store.getState();
-    const { admin, message, messages, messageArray, userList } = reduxState;
+    const { admin, message, messageArray, userList } = reduxState;
     return (
       <div className="chat">
           <div className="chat__sidebar">
