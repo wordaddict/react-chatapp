@@ -173,7 +173,7 @@ class Chat extends Component {
             </div>
             </Scrollable>
           <div className="chat__footer">
-            <form id="message-form">
+            <form id="message-form" onSubmit={this.handleClick}>
               <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={message} onChange={this.handleMessageChange}/>
               <button type="button" onClick={this.handleClick} onKeyPress={this.handleEnterKey}>Send</button>
             </form>
