@@ -3,6 +3,13 @@ import moment from 'moment';
 import styled from 'styled-components';
 import '../components/chat.css';
 import store from '../store';
+import { 
+  adminMessage, 
+  userMessage,
+  createMessage, 
+  showMessages,
+  showUsers
+} from '../actions/index'
 
 const Scrollable = styled.div`
   height: 100%;
@@ -25,13 +32,13 @@ export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.chatsRef = React.createRef();
-    this.state = {
-      admin: {},
-      message: '',
-      messages: {},
-      messageArray: [],
-      userList: []
-    }
+    // this.state = {
+    //   admin: {},
+    //   message: '',
+    //   messages: {},
+    //   messageArray: [],
+    //   userList: []
+    // }
     this.createMessage = this.createMessage.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
@@ -51,28 +58,39 @@ export default class Chat extends Component {
        const formattedTime = moment(data.createdAt).format('h:mm a');
        const { from, text } = data
        console.log('formattedTime', formattedTime);
-       this.setState({
-        admin: {
+       store.dispatch(adminMessage({
           from,
           text,
           createdAt: formattedTime
-        }
-       })
+      }));
+      //  this.setState({
+      //   admin: {
+      //     from,
+      //     text,
+      //     createdAt: formattedTime
+      //   }
+      //  })
     })
 
     socket.on('newMessage', (data) => {
+      const reduxState = store.getState();
+      const { messageArray } = reduxState;
       const formattedTime = moment(data.createdAt).format('h:mm a');
       data.createdAt = formattedTime;
-      this.setState({ messageArray: this.state.messageArray.concat(data) })
+      store.dispatch(showMessages({
+        messageArray: messageArray.concat(data)
+      }));
+      //this.setState({ messageArray: this.state.messageArray.concat(data) })
       console.log('new message', data);
       console.log('messageArray', this.state.messageArray)
     });
 
     socket.on('updateUserList', (data) => {
       console.log('users list', data);
-      this.setState({
-        userList: data
-      });
+      store.dispatch(showUsers(data));
+      // this.setState({
+      //   userList: data
+      // });
     })
   }
 
@@ -90,31 +108,42 @@ export default class Chat extends Component {
       const formattedTime = moment(data.createdAt).format('h:mm a');
       const { from, text } = data
       console.log('formattedTime', formattedTime);
-      this.setState({
-        messages: {
-         from,
-         text,
-         createdAt: formattedTime
-        }
-      })
-      console.log('message', this.state.messages);
+      store.dispatch(createMessage({
+          from,
+          text,
+          createdAt: formattedTime
+      }));
+      // this.setState({
+      //   messages: {
+      //    from,
+      //    text,
+      //    createdAt: formattedTime
+      //   }
+      // })
+      // console.log('message', this.state.messages);
    })
   }
 
   handleMessageChange(e) {
     e.preventDefault();
-    this.setState({
-      message: e.target.value
-    });
+    const message = e.target.value;
+    store.dispatch(userMessage(message));
+    // this.setState({
+    //   message: e.target.value
+    // });
   }
 
   handleClick(e) {
     e.preventDefault();
-    this.setState({
-      message: ''
-    });
+    let message = '';
+    store.dispatch(userMessage(message));
+    // this.setState({
+    //   message: ''
+    // });
     this.createMessage();
-    const message = this.state.message;
+    const reduxState = store.getState();
+    message = reduxState.message;
+    // const message = this.state.message;
     socket.emit('createMessage', {
       message
     }, function(data) {
@@ -124,9 +153,10 @@ export default class Chat extends Component {
 
   render() {
     const reduxState = store.getState();
+    const { admin, message, messages, messageArray, userList } = reduxState;
     console.log('reduxState', reduxState);
-    const message = this.state.message;
-    const userList = this.state.userList;
+    // const message = this.state.message;
+    // const userList = this.state.userList;
     console.log('message', message);
     return (
       <div className="chat">
@@ -146,15 +176,15 @@ export default class Chat extends Component {
                 <ol className="chat__messages">
                 <li class="message">
                   <div class="message__title">
-                    <h4>{this.state.admin.from}</h4>
-                    <span>{this.state.admin.createdAt}</span>
+                    <h4>{admin.from}</h4>
+                    <span>{admin.createdAt}</span>
                   </div>
                   <div class="message__body">
-                    <p>{this.state.admin.text}</p>
+                    <p>{admin.text}</p>
                   </div>
                 </li>
               </ol>
-              {this.state.messageArray.map(
+              {messageArray.map(
                 ({ from, text, createdAt }, i) => [
                     <ol className="chat__messages">
                     <li class="message">
@@ -173,7 +203,7 @@ export default class Chat extends Component {
             </Scrollable>
           <div className="chat__footer">
             <form id="message-form">
-              <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={this.state.message} onChange={this.handleMessageChange}/>
+              <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={message} onChange={this.handleMessageChange}/>
               <button type="button" onClick={this.handleClick}>Send</button>
             </form>
           </div>

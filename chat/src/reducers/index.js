@@ -15,13 +15,36 @@ const reducer = (state, action) => {
                 ...state,
                 room: action.payload
             };
-            break;
         case SET_FULL_NAME:
             return {
                 ...state,
                 name: action.payload
             };
-            break;
+        case SET_ADMIN_MESSAGE:
+            return {
+                ...state,
+                name: action.payload
+            };
+        case SET_MESSAGE:
+            return {
+                ...state,
+                name: action.payload
+            };
+        case CREATE_MESSAGE:
+            return {
+                ...state,
+                name: action.payload
+            };
+        case SET_SHOW_MESSAGES:
+            return {
+                ...state,
+                name: action.payload
+            };
+        case SET_SHOW_USERS:
+            return {
+                ...state,
+                name: action.payload
+            };
         default:
             return state;
     }

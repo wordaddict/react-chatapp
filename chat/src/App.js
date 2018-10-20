@@ -34,9 +34,9 @@ export default class App extends Component {
       const fullName = response.profileObj.name;
       store.dispatch(setFullName(fullName));
       console.log(response.profileObj.name);
-      this.setState({
-        fullName: fullName
-      });
+      // this.setState({
+      //   fullName: fullName
+      // });
     }
     return (
       <div className="centered-form">
