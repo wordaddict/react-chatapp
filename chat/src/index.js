@@ -11,7 +11,7 @@ const render = function() {
         <BrowserRouter>
             <div>
                 <Route exact path="/" component={App}/>
-                <Route exact path="/chat" component={Chat}/>
+                <Route path="/chat" component={Chat}/>
             </div>
         </BrowserRouter>
     ), document.getElementById('root'));
