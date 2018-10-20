@@ -35,6 +35,7 @@ export default class Chat extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.handleEnterKey = this.handleEnterKey.bind(this);
   }
 
   componentDidMount() {
@@ -105,19 +106,6 @@ export default class Chat extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    if (e.keyCode === 13) {
-      this.createMessage();
-      const reduxState = store.getState();
-      const { message } = reduxState;
-      socket.emit('createMessage', {
-        message
-      }, function(data) {
-        console.log('daaata', data);
-      })
-
-      const data = '';
-      store.dispatch(userMessage(data));
-    }
     this.createMessage();
     const reduxState = store.getState();
     const { message } = reduxState;
@@ -129,6 +117,12 @@ export default class Chat extends Component {
 
     const data = '';
     store.dispatch(userMessage(data));
+  }
+
+  handleEnterKey(e) {
+    if (e.keyCode === 13) {
+      this.handleClick(e);
+    }
   }
 
   render() {
@@ -180,7 +174,7 @@ export default class Chat extends Component {
           <div className="chat__footer">
             <form id="message-form">
               <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={message} onChange={this.handleMessageChange}/>
-              <button type="button" onClick={this.handleClick}>Send</button>
+              <button type="button" onClick={this.handleClick} onKeyUp={this.handleEnterKey}>Send</button>
             </form>
           </div>
         </div>
