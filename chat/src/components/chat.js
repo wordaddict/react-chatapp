@@ -18,7 +18,6 @@ const Scrollable = styled.div`
 
 const io = require('socket.io-client');
 const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
-// const socket = io.connect('localhost:3007');
 
   socket.on('connect', function () {
     console.log('connected to server');
@@ -32,13 +31,6 @@ export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.chatsRef = React.createRef();
-    // this.state = {
-    //   admin: {},
-    //   message: '',
-    //   messages: {},
-    //   messageArray: [],
-    //   userList: []
-    // }
     this.createMessage = this.createMessage.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
@@ -64,13 +56,6 @@ export default class Chat extends Component {
         createdAt: formattedTime
       }
        store.dispatch(adminMessage(admin));
-      //  this.setState({
-      //   admin: {
-      //     from,
-      //     text,
-      //     createdAt: formattedTime
-      //   }
-      //  })
     })
 
     socket.on('newMessage', (data) => {
@@ -79,7 +64,6 @@ export default class Chat extends Component {
       data.createdAt = formattedTime;
       const concatMessageArray = messageArray.concat(data);
       store.dispatch(showMessages(concatMessageArray));
-      //this.setState({ messageArray: this.state.messageArray.concat(data) })
       console.log('new message', data);
       console.log('messageArrayfor', messageArray);
     });
@@ -87,9 +71,6 @@ export default class Chat extends Component {
     socket.on('updateUserList', (data) => {
       console.log('users list', data);
       store.dispatch(showUsers(data));
-      // this.setState({
-      //   userList: data
-      // });
     })
   }
 
@@ -113,14 +94,6 @@ export default class Chat extends Component {
         createdAt: formattedTime
       }
       store.dispatch(createMessage(messages));
-      // this.setState({
-      //   messages: {
-      //    from,
-      //    text,
-      //    createdAt: formattedTime
-      //   }
-      // })
-      // console.log('message', this.state.messages);
    })
   }
 
@@ -128,20 +101,13 @@ export default class Chat extends Component {
     e.preventDefault();
     const message = e.target.value;
     store.dispatch(userMessage(message));
-    // this.setState({
-    //   message: e.target.value
-    // });
   }
 
   handleClick(e) {
     e.preventDefault();
-    // this.setState({
-    //   message: ''
-    // });
     this.createMessage();
     const reduxState = store.getState();
     const { message } = reduxState;
-    // const message = this.state.message;
     socket.emit('createMessage', {
       message
     }, function(data) {
@@ -155,11 +121,6 @@ export default class Chat extends Component {
   render() {
     const reduxState = store.getState();
     const { admin, message, messages, messageArray, userList } = reduxState;
-    console.log('USERLIST ARRAY', userList);
-    console.log('reduxState222', reduxState);
-    // const message = this.state.message;
-    // const userList = this.state.userList;
-    console.log('message', message);
     return (
       <div className="chat">
           <div className="chat__sidebar">

@@ -39,9 +39,6 @@ export default class App extends Component {
       this.props.history.push({
         pathname: `/chat`
       });
-      // this.setState({
-      //   fullName: fullName
-      // });
     }
     return (
       <div className="centered-form">
@@ -56,15 +53,10 @@ export default class App extends Component {
               </div>
               <GoogleLogin
                 clientId="774666208006-52rnuod7ajlvgv54t113dmr0r88nadlq.apps.googleusercontent.com"
-                buttonText="Get name"
+                buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                // uxMode='redirect'
-                // redirectUri='https://afternoon-sands-58050.herokuapp.com/chat'
               />
-            <div className="form-field">
-              <button type="button" onClick={this.handleClick}>Join</button>
-            </div>
           </form>
         </div>
       </div>
