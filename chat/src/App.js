@@ -26,8 +26,8 @@ class App extends Component {
   };
 
   render() {
-    const reduxState = store.getState();
-    console.log('reduxState', reduxState);
+    // const reduxState = store.getState();
+    // console.log('reduxState', reduxState);
     const responseGoogle = (response) => {
       if (!response) {
         return this.props.history.push({
@@ -51,7 +51,7 @@ class App extends Component {
             </div>
               <div className="form-field">
                 <label>Create a room</label>
-                <input type="text" name="room" placeholder="Room" value={reduxState.room} onChange={this.handleRoomChange}/>
+                <input type="text" name="room" placeholder="Room" value={this.props.room} onChange={this.handleRoomChange}/>
               </div>
               <GoogleLogin
                 clientId="774666208006-52rnuod7ajlvgv54t113dmr0r88nadlq.apps.googleusercontent.com"
@@ -66,8 +66,14 @@ class App extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    room: state.room,
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { createRoomName, setFullName }
-  )(App);
+)(App);
 
