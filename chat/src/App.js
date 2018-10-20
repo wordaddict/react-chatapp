@@ -47,7 +47,7 @@ export default class App extends Component {
             </div>
               <div className="form-field">
                 <label>Create a room</label>
-                <input type="text" name="room" placeholder="Room" value={this.state.room} onChange={this.handleRoomChange}/>
+                <input type="text" name="room" placeholder="Room" value={reduxState.room} onChange={this.handleRoomChange}/>
               </div>
               <GoogleLogin
                 clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
