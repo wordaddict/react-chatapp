@@ -15,7 +15,7 @@ class App extends Component {
   handleRoomChange(e) {
     e.preventDefault();
     const room = e.target.value;
-    createRoomName(room);
+    this.props.createRoomName(room);
     //store.dispatch(createRoomName(room));
   }
 
@@ -36,7 +36,7 @@ class App extends Component {
       }
       const fullName = response.profileObj.name;
       //store.dispatch(setFullName(fullName));
-      setFullName(fullName);
+      this.props.setFullName(fullName);
       console.log(response.profileObj.name);
       this.props.history.push({
         pathname: `/chat`
