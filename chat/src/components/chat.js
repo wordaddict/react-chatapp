@@ -43,7 +43,7 @@ class Chat extends Component {
   componentDidMount() {
     this.scrollToBottom();
     //const { name, room } = store.getState();
-    const { name, room } = this.state;
+    const { name, room } = this.props;
     const params = {
       name,
       room
@@ -204,6 +204,8 @@ function mapStateToProps(state) {
     message: state.message,
     messageArray: state.messageArray,
     userList: state.userList,
+    name: state.name,
+    room: state.room
   };
 }
 
