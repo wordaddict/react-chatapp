@@ -135,14 +135,14 @@ export default class Chat extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    let message = '';
-    store.dispatch(userMessage(message));
+    const data = '';
+    store.dispatch(userMessage(data));
     // this.setState({
     //   message: ''
     // });
     this.createMessage();
     const reduxState = store.getState();
-    message = reduxState.message;
+    const { message } = reduxState;
     // const message = this.state.message;
     socket.emit('createMessage', {
       message
