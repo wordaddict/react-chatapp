@@ -137,6 +137,7 @@ class Chat extends Component {
   }
 
   render() {
+    console.log('prop2', this.props)
     // const reduxState = store.getState();
     // const { admin, message, messageArray, userList } = reduxState;
     const { admin, message, messageArray, userList } = this.props;

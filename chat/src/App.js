@@ -42,6 +42,7 @@ class App extends Component {
         pathname: `/chat`
       });
     }
+    console.log('prop1', this.props)
     return (
       <div className="centered-form">
         <div className="centered-form__form">
