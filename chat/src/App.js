@@ -50,7 +50,7 @@ export default class App extends Component {
                 <input type="text" name="room" placeholder="Room" value={reduxState.room} onChange={this.handleRoomChange}/>
               </div>
               <GoogleLogin
-                clientId="774666208006-pv3jtdj6ahv8e08h209rdi1okthcq616.apps.googleusercontent.com"
+                clientId="774666208006-52rnuod7ajlvgv54t113dmr0r88nadlq.apps.googleusercontent.com"
                 buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
