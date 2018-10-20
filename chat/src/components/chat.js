@@ -40,12 +40,6 @@ export default class Chat extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
-    // const urlParams = new URLSearchParams(window.location.search);
-    // console.log('Url', urlParams);
-    // const name = urlParams.get('name');
-    // console.log('name', name);
-    // const room = urlParams.get('room');
-    // console.log('room', room);
     const { name, room } = store.getState();
     const params = {
       name,

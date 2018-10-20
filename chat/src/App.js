@@ -8,45 +8,19 @@ import { createRoomName, setFullName } from './actions/index'
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      room: '',
-      fullName: ''
-    };
-
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRoomChange = this.handleRoomChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleNameChange(e) {
-    e.preventDefault();
-    this.setState({
-      name: e.target.value
-    });
   }
 
   handleRoomChange(e) {
     e.preventDefault();
     const room = e.target.value;
     store.dispatch(createRoomName(room));
-    this.setState({
-      room: e.target.value
-    });
   }
 
   handleClick() {
-    console.log("Room: " + this.state.room);
-    console.log("Name: " + this.state.name);
-    this.setState({
-      name: '',
-      room: ''
-    });
-    const room = this.state.room;
-    const fullName = this.state.fullName;
     this.props.history.push({
-      pathname: `/chat`,
-      search: `?name=${fullName}&room=${room}`
+      pathname: `/chat`
     });
   };
 
