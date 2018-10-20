@@ -135,8 +135,6 @@ export default class Chat extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    const data = '';
-    store.dispatch(userMessage(data));
     // this.setState({
     //   message: ''
     // });
@@ -149,6 +147,9 @@ export default class Chat extends Component {
     }, function(data) {
       console.log('daaata', data);
     })
+
+    const data = '';
+    store.dispatch(userMessage(data));
   }
 
   render() {

@@ -54,6 +54,8 @@ export default class App extends Component {
                 buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
+                uxMode='redirect'
+                redirectUri='https://afternoon-sands-58050.herokuapp.com/chat'
               />
             <div className="form-field">
               <button type="button" onClick={this.handleClick}>Join</button>
