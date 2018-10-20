@@ -51,6 +51,8 @@ export default class App extends Component {
   };
 
   render() {
+    const reduxState = store.getState();
+    console.log('reduxState', reduxState);
     const responseGoogle = (response) => {
       if (!response) {
         return;

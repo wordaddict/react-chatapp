@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import '../components/chat.css';
-import { store } from '../store';
+import store from '../store';
 
 const Scrollable = styled.div`
   height: 100%;
@@ -128,6 +128,8 @@ export default class Chat extends Component {
   }
 
   render() {
+    const reduxState = store.getState();
+    console.log('reduxState', reduxState);
     const message = this.state.message;
     const userList = this.state.userList;
     console.log('message', message);
