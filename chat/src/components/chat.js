@@ -3,8 +3,6 @@ import moment from 'moment';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import '../components/chat.css';
-import store from '../store';
-import App from '../App';
 import { 
   adminMessage, 
   userMessage,
@@ -42,7 +40,6 @@ class Chat extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
-    //const { name, room } = store.getState();
     const { name, room } = this.props;
     const params = {
       name,
@@ -59,18 +56,15 @@ class Chat extends Component {
         text,
         createdAt: formattedTime
       }
-       //store.dispatch(adminMessage(admin));
        this.props.adminMessage(admin);
     })
 
     socket.on('newMessage', (data) => {
-      //const { messageArray } = store.getState();
       const { messageArray } = this.props
       const formattedTime = moment(data.createdAt).format('h:mm a');
       data.createdAt = formattedTime;
       const concatMessageArray = messageArray.concat(data);
       this.props.showMessages(concatMessageArray);
-      //store.dispatch(showMessages(concatMessageArray));
       console.log('new message', data);
       console.log('messageArrayfor', messageArray);
     });
@@ -78,7 +72,6 @@ class Chat extends Component {
     socket.on('updateUserList', (data) => {
       console.log('users list', data);
       this.props.showUsers(data);
-      //store.dispatch(showUsers(data));
     })
   }
 
@@ -101,7 +94,6 @@ class Chat extends Component {
         text,
         createdAt: formattedTime
       }
-      //store.dispatch(createMessage(messages));
       this.props.createMessage(messages);
    })
   }
@@ -109,15 +101,12 @@ class Chat extends Component {
   handleMessageChange(e) {
     e.preventDefault();
     const message = e.target.value;
-    //store.dispatch(userMessage(message));
     this.props.userMessage(message);
   }
 
   handleClick(e) {
     e.preventDefault();
     this.createMessage();
-    // const reduxState = store.getState();
-    // const { message } = reduxState;
     const { message } = this.props;
     socket.emit('createMessage', {
       message
@@ -127,20 +116,18 @@ class Chat extends Component {
 
     const data = '';
     this.props.userMessage(data);
-    //store.dispatch(userMessage(data));
   }
 
   handleEnterKey(e) {
+    var code = e.keyCode || e.which
     console.log('e code', e);
-    if (e.keyCode === 13) {
+    if (code === 13) {
       this.handleClick(e);
     }
   }
 
   render() {
-    console.log('prop2', this.props)
-    // const reduxState = store.getState();
-    // const { admin, message, messageArray, userList } = reduxState;
+    console.log('prop2', this.props);
     const { admin, message, messageArray, userList } = this.props;
     return (
       <div className="chat">
@@ -188,7 +175,7 @@ class Chat extends Component {
           <div className="chat__footer">
             <form id="message-form">
               <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={message} onChange={this.handleMessageChange}/>
-              <button type="button" onClick={this.handleClick} onKeyUp={this.handleEnterKey}>Send</button>
+              <button type="button" onClick={this.handleClick} onKeyPress={this.handleEnterKey}>Send</button>
             </form>
           </div>
         </div>
@@ -198,7 +185,6 @@ class Chat extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state1', state);
   return {
     admin: state.admin,
     message: state.message,

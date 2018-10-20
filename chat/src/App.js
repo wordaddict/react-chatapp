@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { connect } from "react-redux";
 import './App.css';
-import store from './store';
 import { createRoomName, setFullName } from './actions/index';
 
 class App extends Component {
@@ -16,7 +15,6 @@ class App extends Component {
     e.preventDefault();
     const room = e.target.value;
     this.props.createRoomName(room);
-    //store.dispatch(createRoomName(room));
   }
 
   handleClick() {
@@ -26,8 +24,6 @@ class App extends Component {
   };
 
   render() {
-    // const reduxState = store.getState();
-    // console.log('reduxState', reduxState);
     const responseGoogle = (response) => {
       if (!response) {
         return this.props.history.push({
@@ -35,7 +31,6 @@ class App extends Component {
         });
       }
       const fullName = response.profileObj.name;
-      //store.dispatch(setFullName(fullName));
       this.props.setFullName(fullName);
       console.log(response.profileObj.name);
       this.props.history.push({
