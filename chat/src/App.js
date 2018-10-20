@@ -68,6 +68,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('state1', state);
   return {
     room: state.room,
   };

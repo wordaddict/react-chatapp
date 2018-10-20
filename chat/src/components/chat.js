@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { connect } from "react-redux";
 import '../components/chat.css';
 import store from '../store';
+import App from '../App';
 import { 
   adminMessage, 
   userMessage,
@@ -197,6 +198,7 @@ class Chat extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('state1', state);
   return {
     admin: state.admin,
     message: state.message,
