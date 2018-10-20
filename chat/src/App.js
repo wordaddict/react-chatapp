@@ -29,11 +29,16 @@ export default class App extends Component {
     console.log('reduxState', reduxState);
     const responseGoogle = (response) => {
       if (!response) {
-        return;
+        return this.props.history.push({
+          pathname: `/`
+        });
       }
       const fullName = response.profileObj.name;
       store.dispatch(setFullName(fullName));
       console.log(response.profileObj.name);
+      this.props.history.push({
+        pathname: `/chat`
+      });
       // this.setState({
       //   fullName: fullName
       // });
@@ -54,8 +59,8 @@ export default class App extends Component {
                 buttonText="Get name"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                uxMode='redirect'
-                redirectUri='https://afternoon-sands-58050.herokuapp.com/chat'
+                // uxMode='redirect'
+                // redirectUri='https://afternoon-sands-58050.herokuapp.com/chat'
               />
             <div className="form-field">
               <button type="button" onClick={this.handleClick}>Join</button>
