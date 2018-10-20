@@ -120,6 +120,7 @@ export default class Chat extends Component {
   }
 
   handleEnterKey(e) {
+    console.log('e code', e);
     if (e.keyCode === 13) {
       this.handleClick(e);
     }
