@@ -154,7 +154,8 @@ export default class Chat extends Component {
   render() {
     const reduxState = store.getState();
     const { admin, message, messages, messageArray, userList } = reduxState;
-    console.log('reduxState', reduxState);
+    console.log('USERLIST ARRAY', userList);
+    console.log('reduxState222', reduxState);
     // const message = this.state.message;
     // const userList = this.state.userList;
     console.log('message', message);
