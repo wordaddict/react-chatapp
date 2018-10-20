@@ -60,7 +60,7 @@ class Chat extends Component {
         createdAt: formattedTime
       }
        //store.dispatch(adminMessage(admin));
-       adminMessage(admin);
+       this.props.adminMessage(admin);
     })
 
     socket.on('newMessage', (data) => {
@@ -69,7 +69,7 @@ class Chat extends Component {
       const formattedTime = moment(data.createdAt).format('h:mm a');
       data.createdAt = formattedTime;
       const concatMessageArray = messageArray.concat(data);
-      showMessages(concatMessageArray);
+      this.props.showMessages(concatMessageArray);
       //store.dispatch(showMessages(concatMessageArray));
       console.log('new message', data);
       console.log('messageArrayfor', messageArray);
@@ -77,7 +77,7 @@ class Chat extends Component {
 
     socket.on('updateUserList', (data) => {
       console.log('users list', data);
-      showUsers(data);
+      this.props.showUsers(data);
       //store.dispatch(showUsers(data));
     })
   }
@@ -102,7 +102,7 @@ class Chat extends Component {
         createdAt: formattedTime
       }
       //store.dispatch(createMessage(messages));
-      createMessage(messages);
+      this.props.createMessage(messages);
    })
   }
 
@@ -110,7 +110,7 @@ class Chat extends Component {
     e.preventDefault();
     const message = e.target.value;
     //store.dispatch(userMessage(message));
-    userMessage(message);
+    this.props.userMessage(message);
   }
 
   handleClick(e) {
@@ -126,7 +126,7 @@ class Chat extends Component {
     })
 
     const data = '';
-    userMessage(data);
+    this.props.userMessage(data);
     //store.dispatch(userMessage(data));
   }
 
