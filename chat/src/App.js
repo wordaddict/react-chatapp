@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import './App.css';
 import './components/chat.css'
+import store from './store';
+import { createRoomName, setFullName } from './actions/index'
 
 export default class App extends Component {
   constructor(props) {
@@ -26,6 +28,8 @@ export default class App extends Component {
 
   handleRoomChange(e) {
     e.preventDefault();
+    const room = e.target.value;
+    store.dispatch(createRoomName(room));
     this.setState({
       room: e.target.value
     });
@@ -39,7 +43,6 @@ export default class App extends Component {
       room: ''
     });
     const room = this.state.room;
-    const name = this.state.name;
     const fullName = this.state.fullName;
     this.props.history.push({
       pathname: `/chat`,
@@ -53,6 +56,7 @@ export default class App extends Component {
         return;
       }
       const fullName = response.profileObj.name;
+      store.dispatch(setFullName(fullName));
       console.log(response.profileObj.name);
       this.setState({
         fullName: fullName
@@ -75,10 +79,6 @@ export default class App extends Component {
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
               />
-            {/* <div className="form-field">
-              <label>Display name</label>
-              <input type="text" name="name" autoFocus placeholder="Name" value={this.state.name} onChange={this.handleNameChange}/>
-            </div> */}
             <div className="form-field">
               <button type="button" onClick={this.handleClick}>Join</button>
             </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import '../components/chat.css';
+import { store } from '../store';
 
 const Scrollable = styled.div`
   height: 100%;
@@ -28,7 +29,6 @@ export default class Chat extends Component {
       admin: {},
       message: '',
       messages: {},
-      newMessage: {},
       messageArray: [],
       userList: []
     }
