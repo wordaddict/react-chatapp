@@ -135,8 +135,8 @@ export default class Chat extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    const data = '';
-    store.dispatch(userMessage(data));
+    // const data = '';
+    // store.dispatch(userMessage(data));
     // this.setState({
     //   message: ''
     // });

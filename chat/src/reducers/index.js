@@ -23,27 +23,27 @@ const reducer = (state, action) => {
         case SET_ADMIN_MESSAGE:
             return {
                 ...state,
-                name: action.payload
+                admin: action.payload
             };
         case SET_MESSAGE:
             return {
                 ...state,
-                name: action.payload
+                message: action.payload
             };
         case CREATE_MESSAGE:
             return {
                 ...state,
-                name: action.payload
+                messages: action.payload
             };
         case SET_SHOW_MESSAGES:
             return {
                 ...state,
-                name: action.payload
+                messageArray: action.payload
             };
         case SET_SHOW_USERS:
             return {
                 ...state,
-                name: action.payload
+                userList: action.payload
             };
         default:
             return state;
