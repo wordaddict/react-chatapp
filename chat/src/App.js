@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
+import { connect } from "react-redux";
 import './App.css';
 import store from './store';
 import { createRoomName, setFullName } from './actions/index';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.handleRoomChange = this.handleRoomChange.bind(this);
@@ -14,7 +15,8 @@ export default class App extends Component {
   handleRoomChange(e) {
     e.preventDefault();
     const room = e.target.value;
-    store.dispatch(createRoomName(room));
+    createRoomName(room);
+    //store.dispatch(createRoomName(room));
   }
 
   handleClick() {
@@ -33,7 +35,8 @@ export default class App extends Component {
         });
       }
       const fullName = response.profileObj.name;
-      store.dispatch(setFullName(fullName));
+      //store.dispatch(setFullName(fullName));
+      setFullName(fullName);
       console.log(response.profileObj.name);
       this.props.history.push({
         pathname: `/chat`
@@ -62,4 +65,9 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(
+  null,
+  { createRoomName, setFullName }
+  )(App);
 

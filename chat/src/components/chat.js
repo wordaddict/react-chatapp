@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
+import { connect } from "react-redux";
 import '../components/chat.css';
 import store from '../store';
 import { 
@@ -27,7 +28,7 @@ const socket = io.connect('https://afternoon-sands-58050.herokuapp.com');
     console.log('Disconnected from server');
   });
 
-export default class Chat extends Component {
+class Chat extends Component {
   constructor(props) {
     super(props);
     this.chatsRef = React.createRef();
@@ -40,7 +41,8 @@ export default class Chat extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
-    const { name, room } = store.getState();
+    //const { name, room } = store.getState();
+    const { name, room } = this.props;
     const params = {
       name,
       room
@@ -56,22 +58,26 @@ export default class Chat extends Component {
         text,
         createdAt: formattedTime
       }
-       store.dispatch(adminMessage(admin));
+       //store.dispatch(adminMessage(admin));
+       adminMessage(admin);
     })
 
     socket.on('newMessage', (data) => {
-      const { messageArray } = store.getState();
+      //const { messageArray } = store.getState();
+      const { messageArray } = this.props
       const formattedTime = moment(data.createdAt).format('h:mm a');
       data.createdAt = formattedTime;
       const concatMessageArray = messageArray.concat(data);
-      store.dispatch(showMessages(concatMessageArray));
+      showMessages(concatMessageArray);
+      //store.dispatch(showMessages(concatMessageArray));
       console.log('new message', data);
       console.log('messageArrayfor', messageArray);
     });
 
     socket.on('updateUserList', (data) => {
       console.log('users list', data);
-      store.dispatch(showUsers(data));
+      showUsers(data);
+      //store.dispatch(showUsers(data));
     })
   }
 
@@ -94,21 +100,24 @@ export default class Chat extends Component {
         text,
         createdAt: formattedTime
       }
-      store.dispatch(createMessage(messages));
+      //store.dispatch(createMessage(messages));
+      createMessage(messages);
    })
   }
 
   handleMessageChange(e) {
     e.preventDefault();
     const message = e.target.value;
-    store.dispatch(userMessage(message));
+    //store.dispatch(userMessage(message));
+    userMessage(message);
   }
 
   handleClick(e) {
     e.preventDefault();
     this.createMessage();
-    const reduxState = store.getState();
-    const { message } = reduxState;
+    // const reduxState = store.getState();
+    // const { message } = reduxState;
+    const { message } = this.props;
     socket.emit('createMessage', {
       message
     }, function(data) {
@@ -116,7 +125,8 @@ export default class Chat extends Component {
     })
 
     const data = '';
-    store.dispatch(userMessage(data));
+    userMessage(data);
+    //store.dispatch(userMessage(data));
   }
 
   handleEnterKey(e) {
@@ -127,8 +137,9 @@ export default class Chat extends Component {
   }
 
   render() {
-    const reduxState = store.getState();
-    const { admin, message, messageArray, userList } = reduxState;
+    // const reduxState = store.getState();
+    // const { admin, message, messageArray, userList } = reduxState;
+    const { admin, message, messageArray, userList } = this.props;
     return (
       <div className="chat">
           <div className="chat__sidebar">
@@ -183,3 +194,17 @@ export default class Chat extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    admin: state.admin,
+    message: state.message,
+    messageArray: state.messageArray,
+    userList: state.userList,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { adminMessage, userMessage, createMessage, showMessages, showUsers }
+)(Chat);
