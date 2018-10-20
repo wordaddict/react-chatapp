@@ -35,7 +35,6 @@ class Chat extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
-    this.handleEnterKey = this.handleEnterKey.bind(this);
   }
 
   componentDidMount() {
@@ -118,14 +117,6 @@ class Chat extends Component {
     this.props.userMessage(data);
   }
 
-  handleEnterKey(e) {
-    var code = e.keyCode || e.which
-    console.log('e code', e);
-    if (code === 13) {
-      this.handleClick(e);
-    }
-  }
-
   render() {
     console.log('prop2', this.props);
     const { admin, message, messageArray, userList } = this.props;
@@ -175,7 +166,7 @@ class Chat extends Component {
           <div className="chat__footer">
             <form id="message-form" onSubmit={this.handleClick}>
               <input name="message" type="text" placeholder="Message" autoFocus autoComplete="off" value={message} onChange={this.handleMessageChange}/>
-              <button type="button" onClick={this.handleClick} onKeyPress={this.handleEnterKey}>Send</button>
+              <button type="button" onClick={this.handleClick}>Send</button>
             </form>
           </div>
         </div>
