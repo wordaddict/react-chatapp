@@ -43,8 +43,7 @@ class Chat extends Component {
   componentDidMount() {
     this.scrollToBottom();
     //const { name, room } = store.getState();
-    console.log('App component', App)
-    const { name, room } = this.props;
+    const { name, room } = this.state;
     const params = {
       name,
       room
