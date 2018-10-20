@@ -58,11 +58,12 @@ export default class Chat extends Component {
        const formattedTime = moment(data.createdAt).format('h:mm a');
        const { from, text } = data
        console.log('formattedTime', formattedTime);
-       store.dispatch(adminMessage({
-          from,
-          text,
-          createdAt: formattedTime
-      }));
+       const admin = {
+        from,
+        text,
+        createdAt: formattedTime
+      }
+       store.dispatch(adminMessage(admin));
       //  this.setState({
       //   admin: {
       //     from,
@@ -73,16 +74,14 @@ export default class Chat extends Component {
     })
 
     socket.on('newMessage', (data) => {
-      const reduxState = store.getState();
-      const { messageArray } = reduxState;
+      const { messageArray } = store.getState();
       const formattedTime = moment(data.createdAt).format('h:mm a');
       data.createdAt = formattedTime;
-      store.dispatch(showMessages({
-        messageArray: messageArray.concat(data)
-      }));
+      const concatMessageArray = messageArray.concat(data);
+      store.dispatch(showMessages(concatMessageArray));
       //this.setState({ messageArray: this.state.messageArray.concat(data) })
       console.log('new message', data);
-      console.log('messageArray', this.state.messageArray)
+      console.log('messageArrayfor', messageArray);
     });
 
     socket.on('updateUserList', (data) => {
@@ -108,11 +107,12 @@ export default class Chat extends Component {
       const formattedTime = moment(data.createdAt).format('h:mm a');
       const { from, text } = data
       console.log('formattedTime', formattedTime);
-      store.dispatch(createMessage({
-          from,
-          text,
-          createdAt: formattedTime
-      }));
+      const messages = {
+        from,
+        text,
+        createdAt: formattedTime
+      }
+      store.dispatch(createMessage(messages));
       // this.setState({
       //   messages: {
       //    from,
