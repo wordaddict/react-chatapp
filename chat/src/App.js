@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import './App.css';
-import './components/chat.css'
 import store from './store';
 import { createRoomName, setFullName } from './actions/index'
 
